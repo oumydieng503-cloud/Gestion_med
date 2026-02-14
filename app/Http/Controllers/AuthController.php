@@ -8,31 +8,49 @@ use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Auth;
 class AuthController extends Controller
 {
-    
+
     public function showLogin()
     {
         return view('auth.login');
     }
-    
+
+    # public function login(Request $request)
+    # {
+    #    $credentials = $request->validate([
+    #       'email' => 'required|email',
+    #      'password' => 'required',
+    # ]);
+    #if (Auth::attempt($credentials)) {
+    #   $request->session()->regenerate();
+    #  return redirect('/dashboard');
+    #}
+    #return back()->withErrors([
+    #   'email' => 'Identifiants incorrects.',
+    #   ]);
+    # }
     public function login(Request $request)
     {
         $credentials = $request->validate([
             'email' => 'required|email',
             'password' => 'required',
         ]);
+
         if (Auth::attempt($credentials)) {
             $request->session()->regenerate();
-            return redirect('/dashboard');
+
+            return redirect()->route('dashboard');
         }
+
         return back()->withErrors([
             'email' => 'Identifiants incorrects.',
         ]);
     }
+
     public function showRegister()
     {
         return view('auth.register');
     }
-    
+
     public function register(Request $request)
     {
         $validated = $request->validate([
@@ -48,7 +66,7 @@ class AuthController extends Controller
         ]);
         return redirect('/login')->with('success', 'Compte créé avec succès.');
     }
-    
+
     public function logout(Request $request)
     {
         Auth::logout();
