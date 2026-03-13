@@ -1,0 +1,54 @@
+info:
+  name: firstRequette
+  type: http
+  seq: 1
+
+http:
+  method: POST
+  url: http://127.0.0.1:8000/api/v1/auth/register?name=test&email=test@gmail.com&password=Touba1234&password_confirmation=Touba1234
+  params:
+    - name: name
+      value: test
+      type: query
+    - name: email
+      value: test@gmail.com
+      type: query
+    - name: password
+      value: Touba1234
+      type: query
+    - name: password_confirmation
+      value: Touba1234
+      type: query
+  auth: inherit
+
+runtime:
+  scripts:
+    - type: before-request
+      code: |-
+        // Test 1 : Vérifier le code 200
+        pm.test("Status code is 200", function () {
+            pm.response.to.have.status(200);
+        });
+
+        // Test 2 : Vérifier que success est true
+        pm.test("Success is true", function () {
+            var jsonData = pm.response.json();
+            pm.expect(jsonData.success).to.be.true;
+        });
+
+        // Test 3 : Sauvegarder le token
+        var jsonData = pm.response.json();
+        var token = jsonData.data.token;
+        pm.environment.set("token", token);
+
+        // Test 4 : Vérifier que le token a été sauvegardé
+        pm.test("Token has been saved", function () {
+            pm.expect(pm.environment.get("token")).to.not.be.undefined;
+            pm.expect(pm.environment.get("token")).to.not.be.empty;
+        });
+
+settings:
+  encodeUrl: true
+  timeout: 0
+  followRedirects: true
+  maxRedirects: 5

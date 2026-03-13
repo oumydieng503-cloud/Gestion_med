@@ -30,7 +30,9 @@ class AdminUserController extends Controller
             'password' => 'required|string|min:6',
             'role' => 'required|string|in:admin,medecin,patient',
             'medecin_id' => 'nullable|exists:users,id',
+            
         ]);
+        
 
         User::create([
             'name' => $request->name,

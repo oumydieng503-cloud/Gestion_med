@@ -42,6 +42,26 @@
                       class="form-control"
                       rows="3">{{ old('description', $service->description) }}</textarea>
         </div>
+        <div class="form-group mb-3">
+            <label>Durée (en minutes)</label>
+            <input type="number"
+                   name="duree"
+                   class="form-control"
+                   value="{{ old('duree', $service->duree) }}"
+                   required>
+        </div>
+       <div class="form-group mb-3">
+    <label>Médecin responsable</label>
+    <select name="medecin_id" class="form-control" required>
+        <option value="">-- Choisir un médecin --</option>
+        @foreach($medecins as $medecin)
+            <option value="{{ $medecin->id }}"
+                {{ old('medecin_id', $service->medecin_id) == $medecin->id ? 'selected' : '' }}>
+                {{ $medecin->name }}
+            </option>
+        @endforeach
+    </select>
+</div>
 
         <button type="submit" class="btn btn-primary">
             Mettre à jour

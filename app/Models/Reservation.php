@@ -10,6 +10,7 @@ use App\Models\Service;
 class Reservation extends Model
 {
     protected $fillable = [
+        
         'user_id',
         'service_id',
         'date_reservation',
@@ -34,6 +35,18 @@ class Reservation extends Model
     public function medecin()
     {
         return $this->belongsTo(User::class, 'medecin_id');
+    }
+    // Nouvelle relation : le profil complet du patient (table patients)
+    public function patientProfil()
+    {
+        return $this->hasOneThrough(
+            Patient::class, // On veut arriver à la table patients
+            User::class,    // En passant par la table users
+            'id',           // Clé sur users
+            'user_id',      // Clé sur patients
+            'user_id',      // Clé locale sur reservations
+            'id'            // Clé locale sur users
+        );
     }
 
 

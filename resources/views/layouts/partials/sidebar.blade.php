@@ -65,7 +65,7 @@
             </a>
         </li>
         <li class="nav-item">
-            <a class="nav-link" href="{{ route('medecin.reservations') }}">
+            <a class="nav-link" href="{{ route('medecin.reservations.index') }}">
                 <i class="fas fa-fw fa-calendar"></i>
                 <span>Réservations</span>
             </a>

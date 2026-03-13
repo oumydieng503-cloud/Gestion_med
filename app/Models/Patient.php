@@ -16,11 +16,16 @@ class Patient extends Model
         'date_naissance',
         'telephone',
         'adresse',
+        'user_id',       
     ];
 
     // Un patient appartient à un médecin
     public function medecin()
     {
         return $this->belongsTo(User::class, 'medecin_id');
+    }
+    // Un patient appartient à un utilisateur (compte)
+    public function user(){
+        return $this->belongsTo(User::class, 'user_id');
     }
 }

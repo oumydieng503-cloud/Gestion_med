@@ -39,4 +39,25 @@ class MedecinController extends Controller
         $reservation->update($validated);
         return back()->with('success', 'Statut mis à jour.');
     }
+    // public function patient(){
+    //     $patients = Reservation::with('patient')
+    //     ->whereHas('service', function ($q) {
+    //         $q->where('medecin_id', auth()->id());
+    //     })
+    //     ->get();
+    //     return view('medecin.patients.index', compact('patients'));
+    // }
+    // MedecinController.php
+
+public function patient()
+{
+    $patients = Reservation::with(['user.patient'])  // charge user ET son profil patient
+        ->whereHas('service', function ($q) {
+            $q->where('medecin_id', auth()->id());
+        })
+        ->get()
+        ->unique('user_id'); // évite les doublons si plusieurs réservations
+        
+    return view('medecin.patients.index', compact('patients'));
+}
 }

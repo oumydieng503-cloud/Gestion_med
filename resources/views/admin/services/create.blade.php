@@ -26,6 +26,17 @@
     <input type="number" name="duree" class="form-control" required>
 </div>
 
+<div class="form-group">
+<label>Médecin</label>
+<select name="medecin_id" class="form-control" required>
+@foreach($medecins as $medecin)
+<option value="{{ $medecin->id }}">
+{{ $medecin->name }}
+</option>
+@endforeach
+</select>
+</div>
+
 <button class="btn btn-success mt-3">Enregistrer</button>
 </form>
 @endsection

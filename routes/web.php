@@ -4,6 +4,7 @@ use Illuminate\Support\Facades\Route;
 use App\Http\Controllers as C;
 use App\Http\Controllers\PatientController;
 use App\Http\Controllers\ServiceController;
+use Laravel\Socialite\Facades\Socialite;
 
 /*
 |--------------------------------------------------------------------------
@@ -13,8 +14,17 @@ use App\Http\Controllers\ServiceController;
 
 // Page d’accueil
 Route::get('/', function () {
-    return view('welcome');
+    return redirect()->route('login');
 });
+
+
+
+// Redirige vers Google
+Route::get('/auth/google', [C\AuthController::class, 'redirectToGoogle'])
+    ->name('auth.google');
+
+// Google rappelle cette URL après connexion
+Route::get('/auth/google/callback', [C\AuthController::class, 'handleGoogleCallback']);
 
 // Services visibles sans connexion
 Route::get('/services', [C\ServiceController::class, 'index']);
@@ -86,11 +96,14 @@ Route::middleware(['auth','role:medecin'])->group(function () {
     // Voir ses services
     Route::get('/medecin/services', [ServiceController::class, 'medecinIndex'])
         ->name('medecin.services.index');
+   // Route::get('/medecin/patients', [C\PatientController::class, 'index'])->name('medecin.patients.index');
 
     // Voir ses réservations
     Route::get('/medecin/reservations', [C\ReservationController::class, 'medecinReservations'])
-        ->name('medecin.reservations');
+        ->name('medecin.reservations.index');
 
+    // Voir ses patients
+    Route::get('/medecin/patients', [C\MedecinController::class, 'patient'])->name('medecin.patients.index');
     // Modifier statut réservation
     Route::put('/medecin/reservations/{reservation}/status',
         [C\ReservationController::class, 'updateStatus'])
