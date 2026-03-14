@@ -622,6 +622,16 @@
     </svg>
     Continuer avec Google
 </a>
+{{-- Lien S'inscrire --}}
+<div style="text-align:center; margin-top: 1rem;">
+    <span style="color:var(--muted); font-size:0.85rem;">Pas encore de compte ?</span>
+    <a href="{{ route('register') }}" style="color:var(--teal); font-size:0.85rem; font-weight:600; text-decoration:none; margin-left:0.3rem;">
+        S'inscrire
+    </a>
+</div>
+
+<!-- Rôles disponibles (informatif) -->
+<div class="roles">
 
             <!-- Rôles disponibles (informatif) -->
             <div class="roles">
