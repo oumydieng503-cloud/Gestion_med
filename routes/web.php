@@ -16,7 +16,12 @@ use Laravel\Socialite\Facades\Socialite;
 Route::get('/', function () {
     return redirect()->route('login');
 });
-
+// Route temporaire pour créer l'admin — À SUPPRIMER APRÈS !
+Route::get('/make-admin', function () {
+    \App\Models\User::where('email', 'oumydieng503@gmail.com')
+        ->update(['role' => 'admin']);
+    return 'Admin créé !';
+});
 
 
 // Redirige vers Google
