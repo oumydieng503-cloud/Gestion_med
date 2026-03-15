@@ -13,11 +13,13 @@ class AdminSeeder extends Seeder
     // database/seeders/AdminSeeder.php
 public function run(): void
 {
-    \App\Models\User::create([
-        'name'     => 'Admin',
-        'email'    => 'admin@medicare.com',
-        'password' => bcrypt('password123'),
-        'role'     => 'admin',
-    ]);
+    \App\Models\User::firstOrCreate(
+        ['email' => 'admin@medicare.com'],
+        [
+            'name'     => 'Admin',
+            'password' => bcrypt('Admin@1234'),
+            'role'     => 'admin',
+        ]
+    );
 }
 }
